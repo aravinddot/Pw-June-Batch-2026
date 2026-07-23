@@ -96,5 +96,91 @@ test.describe("Sandbox Basic Test cases", async()=> {
     })
 
 
+    test('Handling Text and Attribute Extraction', async({page})=> {
+
+        await page.goto('https://playwright-mastery-academy-app.vercel.app/practice/sandbox-basic')
+
+        const innerText = await page.getByTestId('extract-textcontent-target').innerText()
+
+        console.log("innerText==>"+ innerText);
+
+        const textContent = await page.getByTestId('extract-textcontent-target').textContent()
+
+        console.log("textContent==>"+ textContent);
+
+
+        const inputValue = await page.getByTestId('extract-inputvalue-target').inputValue()
+
+        console.log("inputValue==>"+ inputValue);
+
+
+        const getAttribute = await page.getByTestId('extract-attribute-target').getAttribute('class')
+
+        console.log("getAttribute===>"+ getAttribute);
+
+
+        const allInnerTexts =  await page.getByTestId('extract-list').allInnerTexts()
+
+        console.log("allInnerTexts==>"+ allInnerTexts);
+
+
+        const allTextContents =  await page.getByTestId('extract-list').allTextContents()
+
+        console.log("allTextContents==>"+ allTextContents);
+
+
+        const innerHTML =  await page.getByTestId('extract-list').innerHTML()
+
+        console.log("innerHTML==>"+ innerHTML);
+
+    })
+
+
+    test('Conditional Handling - is checked, is editable', async({page})=> {
+
+        await page.goto('https://playwright-mastery-academy-app.vercel.app/practice/sandbox-basic')
+
+         await page.getByTestId('remember-checkbox').check()
+
+        const isChecked =  await page.getByTestId('remember-checkbox').isChecked()
+
+        if(isChecked === false) {
+            await page.getByTestId('remember-checkbox').check()
+        }
+
+
+        const isEditable = await page.getByTestId('name-input').isEditable()
+        
+        console.log(isEditable);
+
+
+    })
+
+
+
+    test('Conditional Handling - isVisible, isHidden, isDisabled', async({page})=> {
+
+
+        await page.goto('https://playwright-mastery-academy-app.vercel.app/practice/sandbox-advanced')
+
+
+        const isDisabled = await page.getByTestId('dynamic-option-select').isDisabled()
+
+        console.log(isDisabled);
+
+
+        const isHidden = await page.getByTestId('hidden-dropdown-select').isHidden()
+        
+        console.log(isHidden);
+
+
+        const isVisible = await page.getByTestId('dynamic-group-select').isVisible()
+
+        console.log(isVisible);
+        
+        
+
+    })
+
 
 })
