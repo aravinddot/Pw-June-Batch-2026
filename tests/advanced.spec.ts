@@ -246,15 +246,96 @@ test.describe('Advanced Practice', async () => {
         const fileName = await download.suggestedFilename()
 
         await download.saveAs(`downloads/${fileName}`)
+    })
 
 
+    test('Handling Iframe', async({page})=> {
+
+
+        await page.goto('https://playwright-mastery-academy-app.vercel.app/practice/sandbox-advanced')
+
+        const iframe = await page.frameLocator('#practice-iframe')
+
+        await iframe.locator('#frame-input').fill('Playwright')
+
+        await iframe.locator('#frame-save').click()
+
+        await expect(iframe.getByText('playwright saved')).toBeVisible()
 
     })
 
 
+    test('Handling shadow dom', async({page})=> {
+
+        await page.goto('https://playwright-mastery-academy-app.vercel.app/practice/sandbox-advanced')
+
+        const shadow = await page.getByTestId('shadow-host')
+
+        await shadow.locator('#shadow-input').fill('Automation Testing')
+
+        await shadow.locator('#shadow-save').click()
+
+        await expect(shadow.getByText('Automation Testing saved')).toBeVisible()
+
+    })
+
+
+    test('Handling Date picker', async({page})=> {
+
+        await page.goto('https://playwright-mastery-academy-app.vercel.app/practice/sandbox-advanced')
+
+        // await page.getByTestId('practice-date-picker').type('01-11-1998')
+
+        // await expect(page.getByText('Practice Date Selected: 1998-11-01')).toBeVisible()
+
+
+        await page.getByTestId('practice-date-picker').fill('1998-11-01')
+
+        await expect(page.getByText('Practice Date Selected: 1998-11-01')).toBeVisible()
+
+    })
+
+
+    test('Handling date picker using DOM manipulation', async({page})=> {
+
+        await page.goto('https://playwright-mastery-academy-app.vercel.app/practice/sandbox-advanced')
+
+        const date = await page.getByTestId('interview-date-picker')
+
+        await date.evaluate((dom, val)=> {
+
+            const html = dom as HTMLInputElement
+            html.value = val as string
+
+            html.dispatchEvent(new Event('input'))
+            html.dispatchEvent(new Event('change'))
+
+        }, '1998-11-01')
+
+        await expect(page.getByText('Interview Date Selected: 1998-11-01')).toBeVisible()
+        
+    })
+
+
+    test('Advanced Wait commands', async({page})=> {
+
+        await page.goto('https://playwright-mastery-academy-app.vercel.app/practice/sandbox-advanced')
+
+        // await page.getByTestId('wait-navigation-link').click()
+
+        // await page.waitForURL('https://playwright-mastery-academy-app.vercel.app/practice/popup?source=waitfornavigation')
+
+        // await expect(page.getByText('Popup Opened Successfully')).toBeVisible()
+
+        await page.getByTestId('wait-response-btn').click()
+
+        await page.waitForResponse('https://playwright-mastery-academy-app.vercel.app/api/practice/waits-status')
+
+        await expect(page.getByText('API Response Completed')).toBeVisible()
 
 
 
+    })
 
 
 
