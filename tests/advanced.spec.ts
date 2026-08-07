@@ -503,7 +503,43 @@ test.describe('Advanced Practice', async () => {
         expect(num).not.toBe(6)
         expect(page.getByText('Mouse wheel scrolled down.')).not.toBeVisible()
 
+    })
 
+
+
+    test('Hard vs soft assertions', async({page})=> {
+
+         await page.goto('https://playwright-mastery-academy-app.vercel.app/practice/sandbox-basic')
+
+        await page.getByTestId('single-click-btn').click()
+
+        await expect(page.getByText('Single click completed')).toBeVisible()
+
+        await expect.soft(page.getByTestId('single-click-status')).toContainText('Single click completed playwright')
+
+
+
+        await page.getByTestId('double-click-btn').dblclick()
+
+        await expect(page.getByText('Double click completed.')).toBeVisible()
+
+
+        await page.getByTestId('hover-btn').hover()
+
+        await expect(page.getByText('Hover triggered successfully.')).toBeVisible()
+
+
+
+        await page.getByTestId('tooltip-trigger-btn').hover()
+
+        await expect(page.getByTestId('hover-tooltip')).toContainText('Tooltip verified')
+
+        await expect(page.getByText('Tooltip verified successfully.')).toBeVisible()
+
+
+        await page.getByTestId('static-practice-select').selectOption('Easy - Basic locator targeting')
+
+        await expect(page.getByText('Static dropdown selected: Easy.')).toBeVisible()
 
 
 
