@@ -327,11 +327,185 @@ test.describe('Advanced Practice', async () => {
 
         // await expect(page.getByText('Popup Opened Successfully')).toBeVisible()
 
-        await page.getByTestId('wait-response-btn').click()
+        // await page.getByTestId('wait-response-btn').click()
 
-        await page.waitForResponse('https://playwright-mastery-academy-app.vercel.app/api/practice/waits-status')
+        // await page.waitForResponse('https://playwright-mastery-academy-app.vercel.app/api/practice/waits-status')
 
-        await expect(page.getByText('API Response Completed')).toBeVisible()
+        // await expect(page.getByText('API Response Completed')).toBeVisible()
+
+        // attached - locator exists in DOM
+        // detached - locator does not exist in DOM and should not be visible
+        // visible - locator exists in DOM and should be visible
+        // hidden - locator exist in DOM or is not visible
+
+        // await page.getByTestId('wait-response-btn').click()
+
+        // await page.getByText('API Response Completed').waitFor({state: 'detached'})
+
+        // await expect(page.getByText('API Response Completed')).toBeVisible()
+
+        // await page.getByTestId('wait-response-btn').click()
+
+        // await page.waitForSelector("//*[contains(text(), 'Trigger API Response Completed')]")
+
+        // await expect(page.getByText('API Response Completed')).toBeVisible()
+
+        // load - DOM ready, images loaded, speed - medium
+        // await page.getByTestId('wait-loadstate-practice-load-btn').click()
+
+        // await page.waitForLoadState('load')
+
+        // await expect(page.getByText('Test load State: Completed')).toBeVisible()
+
+
+        // domcontentloaded - DOM ready, speed - fast
+        // await page.getByTestId('wait-loadstate-practice-dom-btn').click()
+        
+        // await page.waitForLoadState('domcontentloaded')
+
+        // await expect(page.getByText('Test DOMContentLoaded State: Completed')).toBeVisible()
+
+        // networkidle - DOM ready, images loaded, api calls completed, speed - slow
+        // await page.getByTestId('wait-loadstate-practice-networkidle-btn').click()
+        
+        // await page.waitForLoadState('networkidle')
+
+        // await expect(page.getByText('Test Network Idle State: Completed')).toBeVisible()
+
+    })
+
+
+    test('Mouse actions', async({page})=> {
+
+        await page.goto('https://playwright-mastery-academy-app.vercel.app/practice/sandbox-advanced')
+
+        //await page.getByTestId('mouse-downup-target').hover()
+
+        // await page.mouse.down()
+
+        // await expect(page.getByText('Mouse down detected.')).toBeVisible()
+
+        // await page.mouse.up()
+
+        // await expect(page.getByText('Mouse down + up detected.')).toBeVisible()
+
+        // await page.getByTestId('mouse-rightclick-target').click({button: 'right'})
+
+        // await expect(page.getByText('Right click detected on target.')).toBeVisible()
+
+        // await page.getByTestId('mouse-wheel-target').hover()
+
+        // await page.mouse.wheel(0, 300)
+
+        // await expect(page.getByText('Mouse wheel scrolled down.')).toBeVisible()
+
+       // await page.getByTestId('mouse-wheel-target').scrollIntoViewIfNeeded()
+
+    })
+
+
+    test('force actions', async({page})=> {
+
+        // click, dblclick, hover, check, uncheck, dragTo
+
+        await page.getByTestId('mouse-wheel-target').click({force: true})
+
+
+        //attached to the DOM
+        // visible
+        // enabled
+        // stable
+        // not covered by another element
+
+
+        // avoid using force
+        // clicking wronng element unintentionally
+
+
+
+    })
+
+
+
+    test('element screenshot and page screenshot', async({page})=> {
+
+        await page.goto('https://playwright-mastery-academy-app.vercel.app/practice/sandbox-advanced')
+
+        await page.getByTestId('wait-response-btn').screenshot({path: 'screenshots/element-screenshot.png'})
+
+
+        await page.screenshot({path: 'screenshots/page-screenshot.png', fullPage: true})
+        
+    })
+
+
+
+
+
+
+    test('retry, non retry, negating', async({page})=> {
+
+
+        // retry assertions - 5 secs
+        
+        // visibility & state
+        
+        // expect(page.getByText('Mouse wheel scrolled down.')).toBeVisible()
+        // expect(page.getByText('Mouse wheel scrolled down.')).toBeHidden()
+        // expect(page.getByText('Mouse wheel scrolled down.')).toBeEnabled()
+        // expect(page.getByText('Mouse wheel scrolled down.')).toBeDisabled()
+        // expect(page.getByText('Mouse wheel scrolled down.')).toBeEditable()
+        // expect(page.getByText('Mouse wheel scrolled down.')).toBeChecked()
+        // expect(page.getByText('Mouse wheel scrolled down.')).toBeFocused()
+
+
+        // // text 
+
+        // expect(page.getByText('Mouse wheel scrolled down.')).toHaveText('Mouse wheel scrolled down.')
+        // expect(page.getByText('Mouse wheel scrolled down.')).toContainText('Mouse wheel scrolled down.')
+        // expect(page.getByText('Mouse wheel scrolled down.')).toHaveValue('Mouse wheel scrolled down.')
+        // expect(page.getByText('Mouse wheel scrolled down.')).toHaveAttribute('href', '//https://playwright.dev/docs/api/class-locator#locator-getbytext')
+        // expect(page.getByText('Mouse wheel scrolled down.')).toHaveClass('active')
+
+
+        // // page
+
+        // expect(page).toHaveTitle('Playwright')
+        // expect(page).toHaveURL('https://playwright-mastery-academy-app.vercel.app/practice/sandbox-advanced')
+
+
+        // non retry assertions - 0 secs
+
+
+        const num = 5
+
+        expect(num).toBe(5)
+        expect(num).toEqual(5)
+        expect(num).toStrictEqual(5)
+        expect(num).toBeGreaterThan(4)
+        expect(num).toBeLessThan(6)
+
+        expect(true).toBeTruthy()
+        expect(false).toBeFalsy()
+
+        expect(null).toBeNull()
+        expect(undefined).toBeUndefined()
+        expect('Playwright').toBeDefined()
+
+        expect(10).toContain([10, 20, 30])
+
+
+
+        // negating assertions
+
+
+
+        expect(num).not.toBe(6)
+        expect(page.getByText('Mouse wheel scrolled down.')).not.toBeVisible()
+
+
+
+
 
 
 
