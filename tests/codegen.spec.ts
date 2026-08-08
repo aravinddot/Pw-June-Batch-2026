@@ -18,3 +18,5 @@ test('test', async ({ page }) => {
 // npx playwright test --debug
 
 // page.pause() - npx playwright test tests/codegen.spec.ts --headed
+
+// npx playwright show-trace
